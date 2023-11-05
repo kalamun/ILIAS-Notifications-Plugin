@@ -1,0 +1,282 @@
+.kalamun-notifications {
+    container-name: kalamun-notifications;
+    container-type: inline-size;
+    --color-white: #fff;
+    --color-xlight-grey: #e8edf1;
+    --color-light-grey: #c2cfd9;
+    --color-grey: #98a5ae;
+    --color-dark-grey: #788289;
+    --color-xdark-grey: #41464a;
+    --color-black: #1d1d1d;
+
+    --color-red: #d11b26;
+    --color-blue: #006aa5;
+    --color-dark-blue: #003b5d;
+
+    --box-shadow: 0 2px 10px 0 #0002;
+
+    position: relative;
+    padding: 1rem 0;
+    height: 100%;
+
+    display: flex;
+    gap: 1.5em;
+}
+.kalamun-notifications .kalamun-notifications_entry > a,
+.kalamun-notifications .kalamun-notifications_entry > a:hover {
+    display: block;
+    color: var(--color-black);
+    text-decoration: none !important;
+}
+.kalamun-notifications .kalamun-notifications_prevent-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+}
+
+.kalamun-notifications .kalamun-notifications-scrolldown {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    translate: -50% 0;
+    background: var(--color-white);
+    color: var(--color-blue);
+    clip-path: polygon(50% 100%, 100% 0, 0 0);
+    width: 2.6em;
+    text-align: center;
+    font-size: 2em;
+    height: 1.3em;
+}
+
+.kalamun-notifications :where(.kalamun-notifications_body, .kalamun-notifications_sidebar) {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    word-wrap: break-word;
+    line-height: 1.2;
+}
+.kalamun-notifications .kalamun-notifications_calendar {
+    border: 1px solid var(--color-xlight-grey);
+}
+.kalamun-notifications .kalamun-notifications_title h2 {
+    margin: 0 !important;
+    text-transform: uppercase;
+    font-size: var(--font-size-small) !important;
+    color: var(--color-white);
+    border-bottom: 1px solid var(--color-xlight-grey);
+    padding: 0 1em 0.8em;
+    text-align: center;
+}
+.kalamun-notifications .kalamun-notifications_body {
+    border-color: transparent;
+}
+.kalamun-notifications .kalamun-notifications_body .kalamun-notifications_title h2 {
+    border-bottom-color: transparent;
+}
+
+.kalamun-notifications :is(
+    .kalamun-notifications_title,
+    .kalamun-notifications_calendar_title,
+    .kalamun-notifications_inbox_title
+    ) h3 {
+    margin: 0 auto;
+}
+.kalamun-notifications :where(.kalamun-notifications_courses, .kalamun-notifications_entries) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    justify-content: center;
+}
+.kalamun-notifications .kalamun-notifications_course {
+    border: 1px solid var(--color-xlight-grey);
+    flex-basis: calc(50% - 1em);
+    min-width: 20rem;
+    max-width: 28rem;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+}
+.kalamun-notifications .kalamun-notifications_entry {
+    padding: 1.5em;
+    border-bottom: 1px solid var(--color-xlight-grey);
+    width: 100%;
+}
+
+.kalamun-notifications_title {
+    font-weight: bold;
+    font-size: var(--font-size-large);
+}
+
+.kalamun-notifications_course_progress {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    margin: 1em 0;
+}
+.kalamun-notifications_course_progress h6 {
+    text-transform: uppercase;
+    font-weight: normal !important;
+    font-size: var(--font-size-xxsmall);
+    border-bottom: 1px solid;
+    padding-bottom: 0.4em;
+    margin-bottom: 0.4em;
+    opacity: 0.7;
+}
+.kalamun-notifications_course_progress .dci-meter {
+    font-size: 1.2em;
+    translate: 0.3em 0.2em;
+}
+.kalamun-notifications_course_progress .dci-meter .percent {
+    display: none;
+}
+.kalamun-notifications_course {
+    cursor: pointer;
+    position: relative;
+}
+.kalamun-notifications_course_body {
+    position: relative;
+    color: var(--color-white);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.kalamun-notifications_heading {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.kalamun-notifications_heading h3 {
+    font-size: var(--font-size-xxlarge) !important;
+    text-transform: uppercase;
+    margin: 0;
+    text-align: center;
+    flex-grow: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1rem;
+}    
+.kalamun-notifications_heading h3::before {
+    content: '#';
+    margin-right: 0.2em;
+    color: var(--color-red);
+    display: block;
+}
+.kalamun-notifications_more {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+.kalamun-notifications_more::before {
+    content: '';
+    border-bottom: 1px solid var(--color-white);
+    width: 100%;
+    display: block;
+    flex-grow: 2;
+}
+
+.kalamun-notifications_thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: var(--color-blue);
+}
+.kalamun-notifications_thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mix-blend-mode: multiply;
+    opacity: 0.3;
+    filter: grayscale(1);
+}
+.kalamun-notifications_thumb .empty-thumb {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: var(--color-xxlight-grey);
+}
+
+.kalamun-notifications .kalamun-notifications_course_meta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    background: var(--color-light-blue);
+    transition: top .3s ease-in-out;
+}
+.kalamun-notifications .kalamun-notifications_course:hover .kalamun-notifications_course_meta {
+    top: 0;
+}
+
+
+.kalamun-notifications .kalamun-notifications_sidebar {
+    flex-basis: 50%;
+}
+.kalamun-notifications :is(.kalamun-notifications_calendar_date, .kalamun-notifications_inbox_date) {
+    color: var(--color-blue);
+    font-weight: bold;
+}
+.kalamun-notifications :is(.kalamun-notifications_calendar_date, .kalamun-notifications_inbox_date) .time {
+    font-weight: normal;
+    display: inline-block;
+    margin-left: 0.3em;
+    white-space: nowrap;
+}
+.kalamun-notifications_calendar_meta {
+    display: flex;
+    gap: 0.5em;
+    color: var(--color-grey);
+    margin-top: 0.5em;
+    white-space: nowrap;
+    flex-wrap: wrap;
+}
+.kalamun-notifications :is(.kalamun-notifications_calendar_title, .kalamun-notifications_inbox_title) h3 {
+    font-size: var(--font-size-normal) !important;
+    margin: 0.2em 0;
+}
+
+.kalamun-notifications_inbox {
+    background: var(--color-blue);
+    color: var(--color-white);
+    border-color: var(--color-blue);
+    margin-bottom: 1em;
+}
+.kalamun-notifications_inbox * {
+    color: var(--color-white) !important;
+    border-color: transparent !important;
+}
+.kalamun-notifications_inbox :is(.kalamun-notifications_inbox_date, .kalamun-notifications_inbox_description) {
+    opacity: 0.7;
+}
+.kalamun-notifications_inbox .kalamun-notifications_inbox_cta {
+    margin-top: 0.6em;
+    text-align: right;
+}
+.kalamun-notifications_inbox .kalamun-notifications_title h2 {
+    border-bottom-color: #528bb6 !important;
+    margin: 1em 1.5em 0 1.5em !important;
+    padding: 0 0 0.8em 0;
+}
+
+@container kalamun-notifications (max-width: 500px) {
+    .kalamun-notifications .kalamun-notifications_body {
+        flex-direction: column;
+    }
+}
