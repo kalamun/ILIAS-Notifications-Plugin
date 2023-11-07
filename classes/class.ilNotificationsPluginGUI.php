@@ -317,6 +317,7 @@ class ilNotificationsPluginGUI extends ilPageComponentPluginGUI
                             <div class="kalamun-notifications_entries">
                                 <?php
                                 foreach($calendar_entries as $entry) {
+                                    
                                     if (!empty($entry->obj_id)) {
                                         $query = "SELECT * FROM object_reference WHERE obj_id = " . intval($entry->obj_id) . " LIMIT 1";
                                         $res = $db->query($query);
@@ -324,6 +325,10 @@ class ilNotificationsPluginGUI extends ilPageComponentPluginGUI
                                         $ctrl->setParameterByClass("ilrepositorygui", "ref_id", $ref->ref_id);
                                         $permalink = $ctrl->getLinkTargetByClass("ilrepositorygui", "view");
                                     }
+                                    
+                                    $is_link = !empty($entry->location) && preg_match('#https://#', $entry->location);
+                                    if ($is_link) $permalink = $entry->location;
+
                                     ?>
                                     <div class="kalamun-notifications_entry">
                                         <a href="<?= $permalink; ?>">
@@ -359,8 +364,21 @@ class ilNotificationsPluginGUI extends ilPageComponentPluginGUI
                                                     <?php }
                                                     ?>
                                                     <?php
-                                                    if (!empty($entry->location)) {?>
-                                                        <div class="kalamun-notifications_calendar_location"><span class="icon-location"></span> <?=$entry->location;?></div>
+                                                    if (!empty($entry->location)) {
+                                                        ?>
+                                                        <div class="kalamun-notifications_calendar_location">
+                                                            <?php
+                                                            if ($is_link) {
+                                                                ?>
+                                                                <span class="icon-location"></span> Open
+                                                                <?php
+                                                            } else {
+                                                                ?>
+                                                                <span class="icon-location"></span> <?=$entry->location;?>
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                        </div>
                                                     <?php }
                                                     ?>
                                                 </div>
