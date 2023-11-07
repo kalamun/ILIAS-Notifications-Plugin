@@ -18,10 +18,12 @@
     position: relative;
     padding: 1rem 0;
     height: 100%;
-
-    display: flex;
-    gap: 1.5em;
 }
+
+.kalamun-notifications .kalamun-notifications_body {
+    background: var(--color-xlight-grey);
+}
+
 .kalamun-notifications .kalamun-notifications_entry > a,
 .kalamun-notifications .kalamun-notifications_entry > a:hover {
     display: block;
@@ -37,44 +39,29 @@
     z-index: 100;
 }
 
-.kalamun-notifications .kalamun-notifications-scrolldown {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    translate: -50% 0;
-    background: var(--color-white);
-    color: var(--color-blue);
-    clip-path: polygon(50% 100%, 100% 0, 0 0);
-    width: 2.6em;
-    text-align: center;
-    font-size: 2em;
-    height: 1.3em;
+.kalamun-notifications .kalamun-notifications_calendar {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5em;
+    padding: 1.5em;
 }
 
-.kalamun-notifications :where(.kalamun-notifications_body, .kalamun-notifications_sidebar) {
-    display: flex;
-    flex-direction: column;
-    flex-basis: 100%;
-    word-wrap: break-word;
-    line-height: 1.2;
-}
-.kalamun-notifications .kalamun-notifications_calendar {
-    border: 1px solid var(--color-xlight-grey);
-}
 .kalamun-notifications .kalamun-notifications_title h2 {
     margin: 0 !important;
-    text-transform: uppercase;
     font-size: var(--font-size-small) !important;
-    color: var(--color-white);
-    border-bottom: 1px solid var(--color-xlight-grey);
-    padding: 0 1em 0.8em;
+    color: var(--color-blue);
+    padding: 0;
     text-align: center;
+    line-height: 1.5 !important;
 }
+
+.kalamun-notifications .kalamun-notification_icon {
+    color: var(--color-blue);
+    font-size: var(--font-size-xlarge);
+}
+
 .kalamun-notifications .kalamun-notifications_body {
     border-color: transparent;
-}
-.kalamun-notifications .kalamun-notifications_body .kalamun-notifications_title h2 {
-    border-bottom-color: transparent;
 }
 
 .kalamun-notifications :is(
@@ -99,7 +86,6 @@
     overflow: hidden;
 }
 .kalamun-notifications .kalamun-notifications_entry {
-    padding: 1.5em;
     border-bottom: 1px solid var(--color-xlight-grey);
     width: 100%;
 }
@@ -226,9 +212,6 @@
 }
 
 
-.kalamun-notifications .kalamun-notifications_sidebar {
-    flex-basis: 50%;
-}
 .kalamun-notifications :is(.kalamun-notifications_calendar_date, .kalamun-notifications_inbox_date) {
     color: var(--color-blue);
     font-weight: bold;
@@ -243,12 +226,11 @@
     display: flex;
     gap: 0.5em;
     color: var(--color-grey);
-    margin-top: 0.5em;
     white-space: nowrap;
     flex-wrap: wrap;
 }
 .kalamun-notifications :is(.kalamun-notifications_calendar_title, .kalamun-notifications_inbox_title) h3 {
-    font-size: var(--font-size-normal) !important;
+    font-size: var(--font-size-small) !important;
     margin: 0.2em 0;
 }
 

@@ -252,133 +252,128 @@ class ilNotificationsPluginGUI extends ilPageComponentPluginGUI
             <div class="kalamun-notifications_body">
                 <?php
                 if (count($inbox) > 0 || count($calendar_entries) > 0) {
-                    ?>
-                    <div class="kalamun-notifications_sidebar">
-                        <?php
-                        if (count($inbox) > 0) {
-                            ?>
-                            <div class="kalamun-notifications_inbox">
-                                <div class="kalamun-notifications_title">
-                                    <?php
-                                    $inbox_permalink = $ctrl->getLinkTargetByClass("ilMailGUI", "showFolder");
+                    if (1!=1 && count($inbox) > 0) {
+                        ?>
+                        <div class="kalamun-notifications_inbox">
+                            <div class="kalamun-notifications_title">
+                                <?php
+                                $inbox_permalink = $ctrl->getLinkTargetByClass("ilMailGUI", "showFolder");
+                                ?>
+                                <h2><a href="<?= $inbox_permalink; ?>"><span class="icon-mail"></span> Messages</a></h2>
+                            </div>
+                            <div class="kalamun-notifications_entries">
+                                <?php
+                                foreach($inbox as $entry) {
+                                    $ctrl->setParameterByClass(ilMailGUI::class, 'mail_id', $entry['mail_id']);
+                                    $ctrl->setParameterByClass(ilMailGUI::class, 'mobj_id', $entry['folder_id']);
+                                    $ctrl->setParameterByClass(ilMailGUI::class, 'cmdClass', "ilmailfoldergui");
+                                    $permalink = $ctrl->getLinkTargetByClass(ilMailGUI::class, "showMail");
                                     ?>
-                                    <h2><a href="<?= $inbox_permalink; ?>"><span class="icon-mail"></span> Messages</a></h2>
-                                </div>
-                                <div class="kalamun-notifications_entries">
-                                    <?php
-                                    foreach($inbox as $entry) {
-                                        $ctrl->setParameterByClass(ilMailGUI::class, 'mail_id', $entry['mail_id']);
-                                        $ctrl->setParameterByClass(ilMailGUI::class, 'mobj_id', $entry['folder_id']);
-                                        $ctrl->setParameterByClass(ilMailGUI::class, 'cmdClass', "ilmailfoldergui");
-                                        $permalink = $ctrl->getLinkTargetByClass(ilMailGUI::class, "showMail");
-                                        ?>
-                                        <div class="kalamun-notifications_entry">
-                                            <a href="<?= $permalink; ?>">
-                                                <div class="kalamun-notifications_inbox_date">
-                                                    <?php
-                                                    $date = new ilDateTime($entry['send_time'], IL_CAL_DATETIME);
-                                                    $date_parts = $date->get(IL_CAL_FKT_GETDATE);
+                                    <div class="kalamun-notifications_entry">
+                                        <a href="<?= $permalink; ?>">
+                                            <div class="kalamun-notifications_inbox_date">
+                                                <?php
+                                                $date = new ilDateTime($entry['send_time'], IL_CAL_DATETIME);
+                                                $date_parts = $date->get(IL_CAL_FKT_GETDATE);
 
-                                                    echo $date_parts['weekday'] . ' '
-                                                        . $date_parts['mday'] . ' '
-                                                        . $date_parts['month'] . ' '
-                                                        . $date_parts['year'] . ' ';
-                                                        
-                                                    if (!empty($date_parts['hours'])) {
-                                                        echo  '<div class="time">'
-                                                            . str_pad($date_parts['hours'], 2, "0", STR_PAD_LEFT) . ':'
-                                                            . str_pad($date_parts['minutes'], 2, "0", STR_PAD_LEFT)
-                                                            . '</div>';
-                                                    }
-                                                    ?>
-                                                </div>
-                                                <div class="kalamun-notifications_inbox_title">
-                                                    <h3><?= $entry['m_subject']; ?></h3>
-                                                    <?php
-                                                    if (!empty($entry['m_message'])) {?>
-                                                        <div class="kalamun-notifications_inbox_description"><?= self::get_first_sentence($entry['m_message']); ?>…</div>
-                                                        <?php }
-                                                    ?>
-                                                    <div class="kalamun-notifications_inbox_cta"><button class="outlined theme-light">Read all <span class="icon-right"></span></button></div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <?php
+                                                echo $date_parts['weekday'] . ' '
+                                                    . $date_parts['mday'] . ' '
+                                                    . $date_parts['month'] . ' '
+                                                    . $date_parts['year'] . ' ';
+                                                    
+                                                if (!empty($date_parts['hours'])) {
+                                                    echo  '<div class="time">'
+                                                        . str_pad($date_parts['hours'], 2, "0", STR_PAD_LEFT) . ':'
+                                                        . str_pad($date_parts['minutes'], 2, "0", STR_PAD_LEFT)
+                                                        . '</div>';
+                                                }
+                                                ?>
+                                            </div>
+                                            <div class="kalamun-notifications_inbox_title">
+                                                <h3><?= $entry['m_subject']; ?></h3>
+                                                <?php
+                                                if (!empty($entry['m_message'])) {?>
+                                                    <div class="kalamun-notifications_inbox_description"><?= self::get_first_sentence($entry['m_message']); ?>…</div>
+                                                    <?php }
+                                                ?>
+                                                <div class="kalamun-notifications_inbox_cta"><button class="outlined theme-light">Read all <span class="icon-right"></span></button></div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                    if (count($calendar_entries) > 0) {
+                        ?>
+                        <div class="kalamun-notifications_calendar">
+                            <div class="kalamun-notifications_title">
+                                <h2>Agenda</h2>
+                            </div>
+                            <div class="kalamun-notification_icon"><span class="icon-calendar"></span></div>
+                            <div class="kalamun-notifications_entries">
+                                <?php
+                                foreach($calendar_entries as $entry) {
+                                    if (!empty($entry->obj_id)) {
+                                        $query = "SELECT * FROM object_reference WHERE obj_id = " . intval($entry->obj_id) . " LIMIT 1";
+                                        $res = $db->query($query);
+                                        $ref = $res->fetch(ilDBConstants::FETCHMODE_OBJECT);
+                                        $ctrl->setParameterByClass("ilrepositorygui", "ref_id", $ref->ref_id);
+                                        $permalink = $ctrl->getLinkTargetByClass("ilrepositorygui", "view");
                                     }
                                     ?>
-                                </div>
-                            </div>
-                            <?php
-                        }
-                        if (count($calendar_entries) > 0) {
-                            ?>
-                            <div class="kalamun-notifications_calendar">
-                                <div class="kalamun-notifications_title">
-                                    <h2><span class="icon-calendar"></span> Calendar</h2>
-                                </div>
-                                <div class="kalamun-notifications_entries">
-                                    <?php
-                                    foreach($calendar_entries as $entry) {
-                                        if (!empty($entry->obj_id)) {
-                                            $query = "SELECT * FROM object_reference WHERE obj_id = " . intval($entry->obj_id) . " LIMIT 1";
-                                            $res = $db->query($query);
-                                            $ref = $res->fetch(ilDBConstants::FETCHMODE_OBJECT);
-                                            $ctrl->setParameterByClass("ilrepositorygui", "ref_id", $ref->ref_id);
-                                            $permalink = $ctrl->getLinkTargetByClass("ilrepositorygui", "view");
-                                        }
-                                        ?>
-                                        <div class="kalamun-notifications_entry">
-                                            <a href="<?= $permalink; ?>">
-                                                <div class="kalamun-notifications_calendar_date">
-                                                    <?php
-                                                    $date = new ilDateTime($entry->starta, IL_CAL_DATETIME);
-                                                    $date_parts = $date->get(IL_CAL_FKT_GETDATE);
+                                    <div class="kalamun-notifications_entry">
+                                        <a href="<?= $permalink; ?>">
+                                            <div class="kalamun-notifications_calendar_date">
+                                                <?php
+                                                $date = new ilDateTime($entry->starta, IL_CAL_DATETIME);
+                                                $date_parts = $date->get(IL_CAL_FKT_GETDATE);
 
-                                                    echo $date_parts['weekday'] . ' '
-                                                        . $date_parts['mday'] . ' '
-                                                        . $date_parts['month'] . ' '
-                                                        . $date_parts['year'] . ' ';
-                                                        
-                                                    if (!empty($date_parts['hours'])) {
-                                                        echo  '<div class="time">'
-                                                            . str_pad($date_parts['hours'], 2, "0", STR_PAD_LEFT) . ':'
-                                                            . str_pad($date_parts['minutes'], 2, "0", STR_PAD_LEFT)
-                                                            . '</div>';
-                                                    }
-                                                    ?>
-                                                </div>
-                                                <div class="kalamun-notifications_calendar_title">
-                                                    <h3><?= $entry->event_title; ?></h3>
+                                                echo $date_parts['weekday'] . ' '
+                                                    . $date_parts['mday'] . ' '
+                                                    . $date_parts['month'] . ' '
+                                                    . $date_parts['year'] . ' ';
+                                                    
+                                                if (!empty($date_parts['hours'])) {
+                                                    echo  '<div class="time">'
+                                                        . str_pad($date_parts['hours'], 2, "0", STR_PAD_LEFT) . ':'
+                                                        . str_pad($date_parts['minutes'], 2, "0", STR_PAD_LEFT)
+                                                        . '</div>';
+                                                }
+                                                ?>
+                                            </div>
+                                            <div class="kalamun-notifications_calendar_title">
+                                                <h3><?= $entry->event_title; ?></h3>
+                                                <?php
+                                                if (!empty($entry->description)) {?>
+                                                    <div class="kalamun-notifications_calendar_description"><?=$entry->description;?></div>
+                                                <?php }
+                                                ?>
+                                                <div class="kalamun-notifications_calendar_meta">
                                                     <?php
-                                                    if (!empty($entry->description)) {?>
-                                                        <div class="kalamun-notifications_calendar_description"><?=$entry->description;?></div>
+                                                    if (!empty($entry->title)) {?>
+                                                        <div class="kalamun-notifications_calendar_title"><span class="icon-attachment"></span> <?=$entry->title;?></div>
                                                     <?php }
                                                     ?>
-                                                    <div class="kalamun-notifications_calendar_meta">
-                                                        <?php
-                                                        if (!empty($entry->title)) {?>
-                                                            <div class="kalamun-notifications_calendar_title"><span class="icon-attachment"></span> <?=$entry->title;?></div>
-                                                        <?php }
-                                                        ?>
-                                                        <?php
-                                                        if (!empty($entry->location)) {?>
-                                                            <div class="kalamun-notifications_calendar_location"><span class="icon-location"></span> <?=$entry->location;?></div>
-                                                        <?php }
-                                                        ?>
-                                                    </div>
+                                                    <?php
+                                                    if (!empty($entry->location)) {?>
+                                                        <div class="kalamun-notifications_calendar_location"><span class="icon-location"></span> <?=$entry->location;?></div>
+                                                    <?php }
+                                                    ?>
                                                 </div>
-                                            </a>
-                                        </div>
-                                        <?php
-                                    }
-                                    ?>
-                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
                             </div>
-                            <?php
-                            }
-                        ?>
-                    </div>
-                    <?php
+                        </div>
+                        <?php
+                        }
                     }
                 ?>
             </div>
