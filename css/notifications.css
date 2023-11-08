@@ -16,6 +16,8 @@
     --box-shadow: 0 2px 10px 0 #0002;
 
     position: relative;
+    min-height: 100%;
+    background: var(--color-xlight-grey);
 }
 
 .kalamun-notifications .kalamun-notifications_body {
