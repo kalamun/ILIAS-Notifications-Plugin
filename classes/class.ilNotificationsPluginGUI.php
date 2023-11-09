@@ -313,7 +313,7 @@ class ilNotificationsPluginGUI extends ilPageComponentPluginGUI
                             <div class="kalamun-notifications_title">
                                 <h2>Agenda</h2>
                             </div>
-                            <div class="kalamun-notification_icon"><span class="icon-calendar"></span></div>
+                            <div class="kalamun-notification_icon"><span class="icon-picto_calendar-1"></span></div>
                             <div class="kalamun-notifications_entries">
                                 <?php
                                 foreach($calendar_entries as $entry) {
