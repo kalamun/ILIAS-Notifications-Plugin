@@ -12,7 +12,7 @@ This is an example plugin with minimal features for the ILIAS PageComponent Plug
 ```
 mkdir -p Customizing/global/plugins/Services/COPage/PageComponent
 cd Customizing/global/plugins/Services/COPage/PageComponent
-git clone https://github.com/kalamun/ILIAS-Card-Plugin.git Card
+git clone https://github.com/kalamun/ILIAS-Notifications-Plugin.git Notifications
 ```
 
 ## Requirements
