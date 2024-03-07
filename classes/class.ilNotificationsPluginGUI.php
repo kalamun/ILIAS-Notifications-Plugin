@@ -139,14 +139,14 @@ class ilNotificationsPluginGUI extends ilPageComponentPluginGUI
         $form = new ilPropertyFormGUI();
 
         // title
-        $input_title = new ilTextInputGUI($this->lng->txt("title"), 'title');
+        $input_title = new ilTextInputGUI($this->plugin->txt("ifempty_title"), 'title');
         $input_title->setMaxLength(255);
         $input_title->setSize(40);
         $input_title->setRequired(false);
         $form->addItem($input_title);
 
         // description
-        $input_description = new ilTextInputGUI($this->lng->txt("description"), 'description');
+        $input_description = new ilTextInputGUI($this->plugin->txt("ifempty_description"), 'description');
         $input_description->setMaxLength(255);
         $input_description->setSize(40);
         $input_description->setRequired(false);
@@ -208,8 +208,8 @@ class ilNotificationsPluginGUI extends ilPageComponentPluginGUI
         $ctrl = $DIC->ctrl();
         $db = $DIC->database();
         
-        $title = !empty($a_properties['title']) ? $a_properties['title'] : "";
-        $description = !empty($a_properties['description']) ? $a_properties['description'] : "";
+        $ifempty_title = !empty($a_properties['title']) ? $a_properties['title'] : "";
+        $ifempty_description = !empty($a_properties['description']) ? $a_properties['description'] : "";
 
         /* courses */
         $courses = static::getCoursesOfUser($this->user->getId());
@@ -244,7 +244,7 @@ class ilNotificationsPluginGUI extends ilPageComponentPluginGUI
         ilMailBoxQuery::$folderId = $folderId;
         ilMailBoxQuery::$limit = 5;
         ilMailBoxQuery::$filter = ['mail_filter_only_unread' => true];
-        $inbox = ilMailBoxQuery::_getMailBoxListData()['set'];
+        $inbox = []; // ilMailBoxQuery::_getMailBoxListData()['set']; // hide inbox for now
 
         ob_start();
         ?>
@@ -252,7 +252,7 @@ class ilNotificationsPluginGUI extends ilPageComponentPluginGUI
             <div class="kalamun-notifications_body">
                 <?php
                 if (count($inbox) > 0 || count($calendar_entries) > 0) {
-                    if (1!=1 && count($inbox) > 0) {
+                    if (count($inbox) > 0) {
                         ?>
                         <div class="kalamun-notifications_inbox">
                             <div class="kalamun-notifications_title">
@@ -391,8 +391,27 @@ class ilNotificationsPluginGUI extends ilPageComponentPluginGUI
                             </div>
                         </div>
                         <?php
-                        }
                     }
+                } else {
+                    ?>
+                    <div class="kalamun-notifications_empty">
+                        <div class="kalamun-notifications_title">
+                            <?php
+                            if (!empty($ifempty_title)) { ?>
+                                <h2><?= $ifempty_title; ?></h2>
+                            <?php }
+                            ?>
+                        </div>
+                        <div class="kalamun-notifications_message">
+                            <?php
+                            if (!empty($ifempty_description)) { ?>
+                                <div><?= $ifempty_description; ?></div>
+                            <?php }
+                            ?>
+                        </div>
+                    </div>
+                    <?php
+                }
                 ?>
             </div>
         </div>

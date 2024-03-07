@@ -1,3 +1,5 @@
+ifempty_title#:#Si vide: Titre
+ifempty_description#:#Si vide: Texte
 cmd_insert#:#Insérer les Notifications
 content_plugin_version#:#Contenu modifié pour la dernière fois avec la version
 edit_input_field#:#Modifier les Notifications

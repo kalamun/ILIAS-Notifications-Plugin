@@ -1,3 +1,5 @@
+ifempty_title#:#Se vuoto: Titolo
+ifempty_description#:#Se vuoto: Testo
 cmd_insert#:#Inserire la Training Dashboard
 content_plugin_version#:#Contenuto modificato l’ultima volta con la versione
 edit_input_field#:#Modificare la Training Dashboard

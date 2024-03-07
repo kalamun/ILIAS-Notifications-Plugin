@@ -257,6 +257,13 @@
     padding: 0 0 0.8em 0;
 }
 
+.kalamun-notifications .kalamun-notifications_empty {
+    padding: 0.8em;
+}
+.kalamun-notifications .kalamun-notifications_empty h2 {
+    text-align: left;
+}
+
 @container kalamun-notifications (max-width: 500px) {
     .kalamun-notifications .kalamun-notifications_body {
         flex-direction: column;
